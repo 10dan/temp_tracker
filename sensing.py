@@ -2,23 +2,19 @@ import time
 from monitor import TemperatureMonitor
 from db_connect import DatabaseConnection
 
-monitor = TemperatureMonitor()
-db_connection = DatabaseConnection()
-
-try:
+def take_measurment():
+    monitor = TemperatureMonitor()
+    db_connection = DatabaseConnection()
     start = time.time()
     while True:
         temp = monitor.read_temp()
-        print(monitor)
         monitor.add_temp(temp)
-        time.sleep(1)
-        print(time.time() - start)
+        print(temp)
         if monitor.check_stable():
-            print(f"time till stable: {time.time() - start}")
-            break
-except KeyboardInterrupt:
-    print("Interrupted by user")
-except Exception as e:
-    print(f"An error occurred: {e}")
-finally:
-    db_connection.close()
+            db_connection.log_temp(temp)
+            db_connection.close()
+            return f"Measurement recorded in {time.time() - start:.2f}"
+
+        time.sleep(1)
+
+

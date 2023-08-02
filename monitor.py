@@ -7,7 +7,7 @@ class TemperatureMonitor:
     def __init__(self):
         self.temps = []
         self.max_len = 10
-        self.threshold = 0.06
+        self.threshold = 0.08
         self.base_dir = "/sys/bus/w1/devices/"
         self.device_folder = glob.glob(self.base_dir + "28*")[0]
         self.device_file = self.device_folder + "/w1_slave"
