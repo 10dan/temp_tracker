@@ -3,6 +3,7 @@ import threading
 import time
 from monitor import TemperatureMonitor
 from db_connect import DatabaseConnection
+import webserver
 
 lock = threading.Lock()
 button_pin = 23
@@ -41,10 +42,4 @@ def take_measurment():
 
         time.sleep(1)
 
-
-try:
-    while True:
-        time.sleep(0.1)
-except KeyboardInterrupt:
-    print("ancelled.")  # ^Cancelled
-    GPIO.cleanup()
+webserver.start_webserver()
