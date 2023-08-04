@@ -45,7 +45,6 @@ def take_measurment():
 try:
     while True:
         time.sleep(0.1)
-        pass
 except KeyboardInterrupt:
     print("ancelled.")  # ^Cancelled
     GPIO.cleanup()
