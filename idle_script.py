@@ -1,10 +1,15 @@
 import RPi.GPIO as GPIO
 import threading
 import time
+import webserver
+import os
 from monitor import TemperatureMonitor
 from db_connect import DatabaseConnection
-import webserver
 from playsound import playsound
+
+dir_path = os.path.dirname(os.path.realpath(__file__))
+start_sound = os.path.join(dir_path, 'start.mp3')
+end_sound = os.path.join(dir_path, 'end.mp3')
 
 lock = threading.Lock()
 
@@ -13,8 +18,8 @@ GPIO.setmode(GPIO.BCM)
 GPIO.setup(button_pin, GPIO.IN)
 
 def play_end_noise():
-    for _ in range(5):
-        playsound('end.mp3')
+    for _ in range(4):
+        playsound(end_sound)
         time.sleep(0.2)
 
 def button_callback(channel):
@@ -24,7 +29,7 @@ def button_callback(channel):
             if (
                 GPIO.input(button_pin) == GPIO.HIGH
             ):  # Check if button is currently being pressed
-                playsound('start.mp3')
+                playsound(start_sound)
                 take_measurment()
                 play_end_noise()
                 
