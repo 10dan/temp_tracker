@@ -19,8 +19,12 @@ class DatabaseConnection:
         )
         self.conn.commit()
 
-    def get_all_temps(self):
-        self.cur.execute("SELECT * FROM temperatures")
+    def get_all_body_temps(self):
+        self.cur.execute("SELECT * FROM temperatures;")
+        return self.cur.fetchall()
+    
+    def get_all_room_temps(self):
+        self.cur.execute("SELECT * FROM room_temps;")
         return self.cur.fetchall()
 
     def log_room_temp(self, temp):

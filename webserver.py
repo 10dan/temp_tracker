@@ -7,21 +7,32 @@ import json
 app = Flask(__name__)
 
 
-@app.route('/')
+@app.route("/")
 def home():
     db = DatabaseConnection()
-    temps = db.get_all_temps()
+    body_temps = db.get_all_body_temps()
+    room_temps = db.get_all_room_temps()
     db.close()
 
     # Create a Plotly figure
-    fig = go.Figure(data=go.Scatter(x=[temp[0] for temp in temps], y=[temp[1] for temp in temps]))
+    fig1 = go.Figure(
+        data=go.Scatter(
+            x=[temp[0] for temp in body_temps], y=[temp[1] for temp in body_temps]
+        )
+    )
+    fig2 = go.Figure(
+        data=go.Scatter(
+            x=[temp[0] for temp in room_temps], y=[temp[1] for temp in room_temps]
+        )
+    )
 
-    # Convert the figure to JSON
-    fig_json = json.dumps(fig, cls=plotly.utils.PlotlyJSONEncoder)
+    figs = {
+        "body_temp": json.dumps(fig1, cls=plotly.utils.PlotlyJSONEncoder),
+        "room_temp": json.dumps(fig2, cls=plotly.utils.PlotlyJSONEncoder),
+    }
 
-    return render_template('home.html', temperatures=temps, fig_json=fig_json)
-
+    return render_template("home.html", figures=figs)
 
 
 def start_webserver():
-    app.run(debug=True, host="0.0.0.0",port=5000, use_reloader=False)
+    app.run(debug=True, host="0.0.0.0", port=5001, use_reloader=False)

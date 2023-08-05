@@ -4,11 +4,15 @@
 <body>
     <h1>Body temp</h1>
     <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
-    <div id="plot"></div>
+    <div id="body_plot"></div>
+    <h1>Room temp</h1>
+    <div id="room_plot"></div>
 
     <script>
-        var fig = {{ fig_json | safe }};
-        Plotly.newPlot('plot', fig.data, fig.layout);
+        var body_fig = {{ figures.body_temp | safe }};
+        var room_fig = {{ figures.room_temp | safe }};
+        Plotly.newPlot('body_plot', body_fig.data, body_fig.layout);
+        Plotly.newPlot('room_plot', room_fig.data, room_fig.layout);
     </script>
 </body>
 
