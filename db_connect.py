@@ -23,6 +23,11 @@ class DatabaseConnection:
         self.cur.execute("SELECT * FROM temperatures")
         return self.cur.fetchall()
 
+    def log_room_temp(self, temp):
+        self.cur.execute(
+            sql.SQL("INSERT INTO room_temps (temperature) VALUES (%s)"), [temp]
+        )
+        self.conn.commit()
 
     def close(self):
         self.cur.close()

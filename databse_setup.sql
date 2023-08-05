@@ -11,4 +11,9 @@ create table temperatures (
     temperature decimal(6,3) not null
 );
 
-insert into temperatures (temperature) values (25.3);
+-- insert into temperatures (temperature) values (25.3);
+
+create table room_temps (
+    time_stamp timestamptz not null default now(),
+    temperature decimal(6,3) not null
+);
