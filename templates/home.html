@@ -1,19 +1,63 @@
 <!DOCTYPE html>
 <html>
 
-<body>
-    <h1>Body temp</h1>
-    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
-    <div id="body_plot"></div>
-    <h1>Room temp</h1>
-    <div id="room_plot"></div>
+<head>
+    <style>
+        body {
+            background-color: rgb(235, 235, 235);
+        }
 
+        /* Style for the container divs */
+        .temp-container {
+            text-align: center;
+            /* Centers the text and inline elements within the container */
+            font-family: Arial, Helvetica, sans-serif;
+            background-color: white;
+            margin: 30px;
+            box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Body Temperature Section -->
+    <div class="temp-container">
+        <div id="body_plot"></div>
+    </div>
+
+    <!-- Room Temperature Section -->
+    <div class="temp-container">
+        <div id="room_plot"></div>
+    </div>
+
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
     <script>
         var body_fig = {{ figures.body_temp | safe }};
         var room_fig = {{ figures.room_temp | safe }};
-        Plotly.newPlot('body_plot', body_fig.data, body_fig.layout);
-        Plotly.newPlot('room_plot', room_fig.data, room_fig.layout);
+
+        body_fig.layout.title = 'Body Temperature';
+        body_fig.layout.xaxis = { title: 'Time' };
+        body_fig.layout.yaxis = { title: 'Temperature (°C)' };
+        body_fig.layout.plot_bgcolor = '#E6F7FF';
+        if (body_fig.data.length > 0) {
+            body_fig.data[0].line = { color: '#003366' };
+        }
+
+        room_fig.layout.title = 'Room Temperature';
+        room_fig.layout.xaxis = { title: 'Time' };
+        room_fig.layout.yaxis = { title: 'Temperature (°C)' };
+        room_fig.layout.plot_bgcolor = '#ffedd8';
+        if (room_fig.data.length > 0) {
+            room_fig.data[0].line = { color: '#945000' };
+        }
+
+        var config = { responsive: true };
+
+        Plotly.newPlot('body_plot', body_fig.data, body_fig.layout, config);
+        Plotly.newPlot('room_plot', room_fig.data, room_fig.layout, config);
     </script>
+
+
 </body>
 
 </html>
