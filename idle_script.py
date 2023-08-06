@@ -8,8 +8,8 @@ from db_connect import DatabaseConnection
 from playsound import playsound
 
 dir_path = os.path.dirname(os.path.realpath(__file__))
-start_sound = os.path.join(dir_path, 'start.mp3')
-end_sound = os.path.join(dir_path, 'end.mp3')
+start_sound = os.path.join(dir_path, 'media/start.mp3')
+end_sound = os.path.join(dir_path, 'media/end.mp3')
 
 lock = threading.Lock()
 
