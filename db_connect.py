@@ -39,7 +39,7 @@ class DatabaseConnection:
 
         latest_temp_time = result[0]
         current_time = datetime.datetime.now(datetime.timezone.utc)
-        if (current_time - latest_temp_time).total_seconds() >= 1800: # 30 mins
+        if (current_time - latest_temp_time).total_seconds() >= 1800: # 1800 = 30 mins
             self._insert_room_temp(temp)
         else:
             print("Reader needs more time to cool back to ambient temperature.")

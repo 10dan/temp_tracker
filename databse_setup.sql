@@ -6,7 +6,7 @@ create database temperature_tracking;
 grant all privileges on database temperature_tracking to dbadmin;
 
 -- psql -U dbadmin -d temperature_tracking
-CREATE TABLE room_temps (
+CREATE TABLE temperatures (
     id SERIAL PRIMARY KEY,
     time_stamp TIMESTAMPTZ NOT NULL DEFAULT now(),
     temperature DECIMAL(6,3) NOT NULL
@@ -19,3 +19,6 @@ create table room_temps (
     time_stamp timestamptz not null default now(),
     temperature decimal(6,3) not null
 );
+
+INSERT INTO temperatures (id, time_stamp, temperature)
+VALUES (0, '2023-06-08 08:15', 35.8);

@@ -50,8 +50,7 @@ def take_measurment():
             db_connection.close()
             break
         time.sleep(1)
-
-
+        
 try:
     webserver.start_webserver()
 except KeyboardInterrupt:

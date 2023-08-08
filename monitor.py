@@ -9,10 +9,12 @@ class TemperatureMonitor:
         self.max_len = 10
         self.threshold = 0.08
         self.base_dir = "/sys/bus/w1/devices/"
-        self.device_folder = glob.glob(self.base_dir + "28*")[0]
+        device_folders = glob.glob(self.base_dir + "28*")
+        if not device_folders:
+            raise Exception("DS18B20 sensor not found!")
+        self.device_folder = device_folders[0]
         self.device_file = self.device_folder + "/w1_slave"
-        os.system("modprobe w1-gpio")
-        os.system("modprobe w1-therm")
+
 
     def __str__(self):
         length = len(self.temps)
@@ -48,4 +50,5 @@ class TemperatureMonitor:
         if equals_pos != -1:
             temp_string = lines[1][equals_pos + 2 :]
             temp_c = float(temp_string) / 1000.0
+            print(temp_c)
             return temp_c

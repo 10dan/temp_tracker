@@ -14,17 +14,22 @@ def home():
     room_temps = db.get_all_room_temps()
     db.close()
 
-    # Create a Plotly figure
+    # Convert datetime with timezone to naive datetime (remove timezone) and Decimal to float
+    body_temps = [(temp[0], temp[1].replace(tzinfo=None), float(temp[2])) for temp in body_temps]
+    room_temps = [(temp[0], temp[1].replace(tzinfo=None), float(temp[2])) for temp in room_temps]
+
+    # Create the figures
     fig1 = go.Figure(
         data=go.Scatter(
-            x=[temp[0] for temp in body_temps], y=[temp[1] for temp in body_temps]
+            x=[temp[1] for temp in body_temps], y=[temp[2] for temp in body_temps]
         )
     )
     fig2 = go.Figure(
         data=go.Scatter(
-            x=[temp[0] for temp in room_temps], y=[temp[1] for temp in room_temps]
+            x=[temp[1] for temp in room_temps], y=[temp[2] for temp in room_temps]
         )
     )
+
 
     figs = {
         "body_temp": json.dumps(fig1, cls=plotly.utils.PlotlyJSONEncoder),
